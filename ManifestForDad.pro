@@ -26,3 +26,6 @@ FORMS += \
 HEADERS += \
     mainwindow.h \
     qtxlsxwriterclass.h
+
+DISTFILES += \
+    README.md
