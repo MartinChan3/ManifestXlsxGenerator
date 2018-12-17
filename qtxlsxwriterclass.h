@@ -6,6 +6,7 @@
 #include "xlsxdocument.h"
 #include <QFile>
 #include <QDate>
+#include <QDebug>
 
 #define SINGLE_PAPER_LINE 8
 #define START_ROW 1

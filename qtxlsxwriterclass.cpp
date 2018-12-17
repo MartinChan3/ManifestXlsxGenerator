@@ -36,7 +36,7 @@ bool QtXlsxWriterClass::startWriteNewExcel(const SupplyAllPack &pack)
         int singleManThingsNum = mSinglePersonInfoGrp.at(i).infoPtrs.size();
         int size = (int)(singleManThingsNum / SINGLE_PAPER_LINE);
         if (singleManThingsNum > size * SINGLE_PAPER_LINE)
-            size++; //若不足八条的补足八条
+            size++; //若不足规定条数则视为进1
 
         for (int j = 0; j < size; j++)
         {

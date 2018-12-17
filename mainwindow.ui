@@ -86,7 +86,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pB_ReadInXlsx">
        <property name="text">
         <string>导入模板</string>
        </property>

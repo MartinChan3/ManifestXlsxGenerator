@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include "qtxlsxwriterclass.h"
+#include <QThread>
 
 class Controller : public QObject
 {
@@ -9,12 +10,15 @@ class Controller : public QObject
 
 public:
     Controller();
+    ~Controller();
 
 private:
     QtXlsxWriterClass xlsxWriter;
     QString inFilePath;
     QDate   inDate;
     SupplyAllPack mInfoPack;
+
+    QThread *threadControlp;
 
 public slots:
     void Slot_StartProgress(QString&, QDate&);

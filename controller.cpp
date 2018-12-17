@@ -1,8 +1,23 @@
 #include "controller.h"
-#include <QDebug>
+
 Controller::Controller()
 {
+    threadControlp = new QThread();
 
+    this->moveToThread(threadControlp);
+    connect(threadControlp, SIGNAL(finished()), this, SLOT(deleteLater()));
+    connect(&xlsxWriter, SIGNAL(Sig_Status_Info(int,QString)),
+            this, SIGNAL(Sig_Controller_Status(int,QString)));
+    threadControlp->start();
+}
+
+Controller::~Controller()
+{
+    if (threadControlp)
+    {
+        delete threadControlp;
+        threadControlp = Q_NULLPTR;
+    }
 }
 
 //开始整个流程
@@ -10,7 +25,6 @@ void Controller::Slot_StartProgress(QString &FilePathStr, QDate &date)
 {
     if (FilePathStr == inFilePath && date == inDate)
     {
-
         return;
     }
 
