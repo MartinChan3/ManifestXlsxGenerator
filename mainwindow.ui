@@ -7,39 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>292</width>
-    <height>462</height>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>271</width>
-      <height>321</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>类别</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>数量</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>单价</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -93,11 +68,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>380</y>
+      <y>340</y>
       <width>251</width>
       <height>31</height>
      </rect>
@@ -125,6 +100,16 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>271</width>
+      <height>271</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -18,14 +18,16 @@ else:win32:CONFIG(debug, debug|release): DESTDIR = ../OUTPUT/debug
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    qtxlsxwriterclass.cpp
+    qtxlsxwriterclass.cpp \
+    controller.cpp
 
 FORMS += \
     mainwindow.ui
 
 HEADERS += \
     mainwindow.h \
-    qtxlsxwriterclass.h
+    qtxlsxwriterclass.h \
+    controller.h
 
 DISTFILES += \
     README.md

@@ -12,3 +12,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::startProgress(QString &filePath, QDate date)
+{
+    emit Sig_Call_Output(filePath, date);
+}

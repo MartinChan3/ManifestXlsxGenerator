@@ -10,10 +10,13 @@
 #define SINGLE_PAPER_LINE 8
 #define START_ROW 1
 #define START_COL 1
+#define START_ROW_OF_DATE 2
+#define START_COL_OF_DATE 2
 
 enum {
     SIGNAL_OK = 0,    //信息无问题，同时附加信息
-    SIGNAL_WRONG = 1
+    SIGNAL_WRONG = 1,
+    SIGNAL_REPEAT_OUTPUT
 };
 
 typedef struct _SUPPLYINFO{
@@ -57,8 +60,10 @@ public:
 private:
     QString pathOfTemplateXlsxFile;
 
-    int  startRow;
-    int  startCol;
+    int  startRowOfThingData;
+    int  startColOfThingData;
+    int  startRowOfDate;
+    int  startColOfDate;
 
 public slots:
     bool startWriteNewExcel(const SupplyAllPack&pack);
@@ -67,6 +72,9 @@ public slots:
                                   int startIndex);
     bool writeSingleDocumentDateTime(QXlsx::Document &sDoc,
                                      const QDate &time);
+
+    bool readSpecifiedFormatData(QXlsx::Document &sDoc,
+                                 SupplyAllPack& rPack);
 
 
 

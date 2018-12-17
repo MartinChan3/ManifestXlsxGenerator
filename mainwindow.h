@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "controller.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +18,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void startProgress(QString & filePath, QDate date = QDate::currentDate());
+
+signals:
+    void Sig_Call_Output(QString&, QDate&);
+
 };
 
 #endif // MAINWINDOW_H

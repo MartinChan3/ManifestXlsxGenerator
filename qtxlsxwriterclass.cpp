@@ -2,8 +2,11 @@
 
 QtXlsxWriterClass::QtXlsxWriterClass()
 {
-    startRow = START_ROW;
-    startCol = START_COL;
+    startRowOfThingData = START_ROW;
+    startColOfThingData = START_COL;
+
+    startRowOfDate = START_ROW_OF_DATE;
+    startColOfDate = START_COL_OF_DATE;
 
     pathOfTemplateXlsxFile = QString("./template/RuKuDan.xlsx");
 }
@@ -65,10 +68,10 @@ bool QtXlsxWriterClass::writeSingleDocumentThing(QXlsx::Document &sDoc,
     for (int i = 0; i < writeSize; i++)
     {
         SupplyInfoPtr lineInfoPtr = tInfosPtr->at(i + startIndex);
-        sDoc.write(startRow + i, startCol + 0, lineInfoPtr->nameOfThing);
-        sDoc.write(startRow + i, startCol + 1, lineInfoPtr->nameOfUnit);
-        sDoc.write(startRow + i, startCol + 2, lineInfoPtr->number);
-        sDoc.write(startRow + i, startCol + 3, lineInfoPtr->unitPrice);
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 0, lineInfoPtr->nameOfThing);
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 1, lineInfoPtr->nameOfUnit);
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 2, lineInfoPtr->number);
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 3, lineInfoPtr->unitPrice);
     }
 
     return true;
@@ -78,7 +81,48 @@ bool QtXlsxWriterClass::writeSingleDocumentDateTime(QXlsx::Document &sDoc,
                                                     const QDate &time)
 {
     ///1216 here
+    sDoc.write(START_ROW,START_COL,time.year());
+    sDoc.write(START_ROW,START_COL,time.month());
+    sDoc.write(START_ROW,START_COL,time.day());
+
     return true;
+}
+
+//读取特定的xlsx文件的内容
+bool QtXlsxWriterClass::readSpecifiedFormatData(QXlsx::Document &sDoc, SupplyAllPack &rPack)
+{
+    QXlsx::CellRange rangeOfDoc = sDoc.dimension();
+    int tStartRow = rangeOfDoc.firstRow();
+    int tEndRow = rangeOfDoc.lastRow();
+
+    bool tOk1, tOk2;
+
+    for (int i = tStartRow; i < tEndRow; i++)
+    {
+        ///根据实际情况修改对应的位置的内容
+        QString tNameOfPerson = sDoc.read(tStartRow + i, 0).toString();
+        QString tNameOfThing  = sDoc.read(tStartRow + i, 1).toString();
+        QString tNameOfUnit   = sDoc.read(tStartRow + i, 2).toString();
+        float   tNumber       = sDoc.read(tStartRow + i, 3).toFloat(&tOk1);
+        float   tUnitPrice    = sDoc.read(tStartRow + i, 4).toFloat(&tOk2);
+
+        if (tOk1 && tOk2 && !tNameOfPerson.isEmpty() && !tNameOfThing.isEmpty())
+        {
+            SupplyInfo tSingleInfo;
+            tSingleInfo.nameOfPerson = tNameOfPerson;
+            tSingleInfo.nameOfThing  = tNameOfThing;
+            tSingleInfo.nameOfUnit   = tNameOfUnit;
+            tSingleInfo.number       = tNumber;
+            tSingleInfo.unitPrice    = tUnitPrice;
+
+            rPack.mSupplyInfos << tSingleInfo;
+        }
+    }
+
+    if (rPack.mSupplyInfos.size() == 0)
+        return false;
+    else
+        return true;
 }
 
 //转换为以人名分类的情况
