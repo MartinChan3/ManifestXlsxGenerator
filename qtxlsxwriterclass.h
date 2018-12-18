@@ -77,8 +77,6 @@ public slots:
     bool readSpecifiedFormatData(QXlsx::Document &sDoc,
                                  SupplyAllPack& rPack);
 
-
-
 signals:
     bool Sig_Status_Info(int, QString);
 };

@@ -13,6 +13,9 @@ Controller::Controller()
 
 Controller::~Controller()
 {
+    threadControlp->quit();
+    threadControlp->wait();
+
     if (threadControlp)
     {
         delete threadControlp;
@@ -20,7 +23,7 @@ Controller::~Controller()
     }
 }
 
-//开始整个流程
+//开始整个流程(读取到输出)
 void Controller::Slot_StartProgress(QString &FilePathStr, QDate &date)
 {
     if (FilePathStr == inFilePath && date == inDate)
