@@ -2,29 +2,17 @@
 
 Controller::Controller()
 {
-    threadControlp = new QThread();
-
-    this->moveToThread(threadControlp);
-    connect(threadControlp, SIGNAL(finished()), this, SLOT(deleteLater()));
     connect(&xlsxWriter, SIGNAL(Sig_Status_Info(int,QString)),
-            this, SIGNAL(Sig_Controller_Status(int,QString)));
-    threadControlp->start();
+            this, SIGNAL(Sig_Controller_Status(int,QString))); 
 }
 
 Controller::~Controller()
 {
-    threadControlp->quit();
-    threadControlp->wait();
 
-    if (threadControlp)
-    {
-        delete threadControlp;
-        threadControlp = Q_NULLPTR;
-    }
 }
 
 //开始整个流程(读取到输出)
-void Controller::Slot_StartProgress(QString &FilePathStr, QDate &date)
+void Controller::Slot_StartProgress(QString FilePathStr, QDate date)
 {
     if (FilePathStr == inFilePath && date == inDate)
     {
@@ -38,6 +26,7 @@ void Controller::Slot_StartProgress(QString &FilePathStr, QDate &date)
         return;
     }
 
+    ///1219 Debug here
     //Read-in the date
     QXlsx::Document sDoc(FilePathStr);
     mInfoPack.dateTime = date;
@@ -45,6 +34,7 @@ void Controller::Slot_StartProgress(QString &FilePathStr, QDate &date)
     bool ok = xlsxWriter.readSpecifiedFormatData(sDoc, mInfoPack);
     if (!ok)
     {
+        emit Sig_Controller_Status(SIGNAL_WRONG_LOADING_INFO, "Wrong info input");
         return;
     }
 
@@ -52,6 +42,10 @@ void Controller::Slot_StartProgress(QString &FilePathStr, QDate &date)
     ok = xlsxWriter.startWriteNewExcel(mInfoPack);
     if (!ok)
     {
+        emit Sig_Controller_Status(SIGNAL_WRONG_OUPUTING_XLSX, "Wrong when write to the text");
         return;
     }
+
+    emit Sig_Controller_Status(SIGNAL_OUTPUT_OK, QString());
+    return;
 }

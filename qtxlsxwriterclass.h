@@ -16,8 +16,11 @@
 
 enum {
     SIGNAL_OK = 0,    //信息无问题，同时附加信息
-    SIGNAL_WRONG = 1,
-    SIGNAL_REPEAT_OUTPUT
+    SIGNAL_OUTPUT_OK, //整个读取过程无问题
+    SIGNAL_WRONG = 0x10,
+    SIGNAL_REPEAT_OUTPUT,
+    SIGNAL_WRONG_LOADING_INFO,
+    SIGNAL_WRONG_OUPUTING_XLSX
 };
 
 typedef struct _SUPPLYINFO{

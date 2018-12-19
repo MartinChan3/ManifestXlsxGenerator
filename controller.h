@@ -18,10 +18,8 @@ private:
     QDate   inDate;
     SupplyAllPack mInfoPack;
 
-    QThread *threadControlp;
-
 public slots:
-    void Slot_StartProgress(QString&, QDate&);
+    void Slot_StartProgress(QString, QDate);
 
 signals:
     void Sig_Controller_Status(int, QString);

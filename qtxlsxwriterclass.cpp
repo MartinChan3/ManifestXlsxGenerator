@@ -99,12 +99,12 @@ bool QtXlsxWriterClass::readSpecifiedFormatData(QXlsx::Document &sDoc, SupplyAll
 
     for (int i = tStartRow; i < tEndRow; i++)
     {
-        ///根据实际情况修改对应的位置的内容
-        QString tNameOfPerson = sDoc.read(tStartRow + i, 0).toString();
-        QString tNameOfThing  = sDoc.read(tStartRow + i, 1).toString();
-        QString tNameOfUnit   = sDoc.read(tStartRow + i, 2).toString();
-        float   tNumber       = sDoc.read(tStartRow + i, 3).toFloat(&tOk1);
-        float   tUnitPrice    = sDoc.read(tStartRow + i, 4).toFloat(&tOk2);
+        ///1219 此处需要根据实际情况修改对应的位置的内容
+        QString tNameOfPerson = sDoc.read(tStartRow + i, 1).toString();
+        QString tNameOfThing  = sDoc.read(tStartRow + i, 2).toString();
+        QString tNameOfUnit   = sDoc.read(tStartRow + i, 3).toString();
+        float   tNumber       = sDoc.read(tStartRow + i, 4).toFloat(&tOk1);
+        float   tUnitPrice    = sDoc.read(tStartRow + i, 5).toFloat(&tOk2);
 
         if (tOk1 && tOk2 && !tNameOfPerson.isEmpty() && !tNameOfThing.isEmpty())
         {

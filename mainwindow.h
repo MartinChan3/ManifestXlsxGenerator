@@ -21,12 +21,14 @@ private:
     Ui::MainWindow *ui;
     Controller *controllerp;
 
+    QThread *threadControlp;
+
 public slots:
-    void startProgress(QString & filePath, QDate date = QDate::currentDate());
+    void startProgress(QString filePath, QDate date = QDate::currentDate());
     void Slot_Receive_Info(int, QString);
 
 signals:
-    void Sig_Call_Output(QString&, QDate&);
+    void Sig_Call_Output(QString, QDate);
 
 private slots:
     void on_pB_ReadInXlsx_clicked();
