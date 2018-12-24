@@ -1,4 +1,6 @@
 ﻿#include "qtxlsxwriterclass.h"
+#include <QStandardPaths>
+#include <QDir>
 
 QtXlsxWriterClass::QtXlsxWriterClass()
 {
@@ -48,9 +50,23 @@ bool QtXlsxWriterClass::startWriteNewExcel(const SupplyAllPack &pack)
                                      i * SINGLE_PAPER_LINE + j);
 
             ///保存,这里需要修改为正确的名称
-            QString tSDocNameStr = QString::fromLocal8Bit(mSinglePersonInfoGrp.at(i).nameOfPerson.toLatin1())
-                    + ".xlsx";
-            tSDoc.saveAs(tSDocNameStr);
+            QString folderPath;
+            if (!generateDesktopDir(QDateTime::currentDateTime(), folderPath))
+            {
+                emit Sig_Status_Info(SIGNAL_WRONG_FOLDER_GENERATOR, "Wrong generator");
+                return false;
+            }
+            QString tSDocNameStr = folderPath +"/" +
+                                   //QString::fromLocal8Bit(mSinglePersonInfoGrp.at(i).nameOfPerson.toLatin1())
+                                   mSinglePersonInfoGrp.at(i).nameOfPerson
+                                   + "_" + QString::number(j)
+                                   + ".xlsx";
+            ///1224 debug here
+            if (!tSDoc.saveAs(tSDocNameStr))
+            {
+                emit Sig_Status_Info(SIGNAL_WRONG_CANT_SAVE_XLSX, "Can't save xlsx");
+                return false;
+            }
         }
     }
 }
@@ -164,3 +180,32 @@ SupplyInfoPtr toPtr(const SupplyInfo &info)
 {
     return &info;
 }
+
+//在桌面生成指定的文件夹
+bool generateDesktopDir(const QDateTime &dateTime,
+                        QString& dirPath)
+{
+    QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    QDir dir(desktopPath + QString::fromLocal8Bit("/生成结果"));
+    //检查是否需要顶级目录
+    if (!dir.exists())
+    {
+       if (!dir.mkdir(dir.path()))
+       {
+           return false;
+       }
+    }
+    QString timeStr = dateTime.toString("yyyyMMdd_hhmmss");
+    dir.setPath(dir.path() + "/" + timeStr);
+    if (!dir.exists())
+    {
+        if(!dir.mkdir(dir.path()))
+        {
+            return false;
+        }
+    }
+
+    dirPath = dir.path();
+    return true;
+}
+

@@ -20,7 +20,9 @@ enum {
     SIGNAL_WRONG = 0x10,
     SIGNAL_REPEAT_OUTPUT,
     SIGNAL_WRONG_LOADING_INFO,
-    SIGNAL_WRONG_OUPUTING_XLSX
+    SIGNAL_WRONG_OUPUTING_XLSX,
+    SIGNAL_WRONG_FOLDER_GENERATOR,
+    SIGNAL_WRONG_CANT_SAVE_XLSX
 };
 
 typedef struct _SUPPLYINFO{
@@ -52,7 +54,7 @@ typedef struct _SUPPLYALLPACK{
     SinglePersonInfoGrp toSinglePersonInfoGrp() const;
 }SupplyAllPack;
 
-
+bool generateDesktopDir(const QDateTime&, QString &dirPath);
 
 class QtXlsxWriterClass : public QObject
 {
