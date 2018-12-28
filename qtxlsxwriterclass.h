@@ -9,8 +9,8 @@
 #include <QDebug>
 
 #define SINGLE_PAPER_LINE 8
-#define START_ROW 1
-#define START_COL 1
+#define START_ROW 5
+#define START_COL 2
 #define START_ROW_OF_DATE 2
 #define START_COL_OF_DATE 2
 

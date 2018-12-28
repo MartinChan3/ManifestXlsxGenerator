@@ -97,9 +97,9 @@ bool QtXlsxWriterClass::writeSingleDocumentDateTime(QXlsx::Document &sDoc,
                                                     const QDate &time)
 {
     ///1216 here
-    sDoc.write(START_ROW,START_COL,time.year());
-    sDoc.write(START_ROW,START_COL,time.month());
-    sDoc.write(START_ROW,START_COL,time.day());
+    sDoc.write(START_ROW_OF_DATE, START_COL_OF_DATE, time.year());
+    sDoc.write(START_ROW_OF_DATE, START_COL_OF_DATE, time.month());
+    sDoc.write(START_ROW_OF_DATE, START_COL_OF_DATE, time.day());
 
     return true;
 }
