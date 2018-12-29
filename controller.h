@@ -1,4 +1,4 @@
-#ifndef CONTROLLER_H
+﻿#ifndef CONTROLLER_H
 #define CONTROLLER_H
 
 #include "qtxlsxwriterclass.h"
@@ -23,6 +23,7 @@ public slots:
 
 signals:
     void Sig_Controller_Status(int, QString);
+    void Sig_CallUiShow2(SinglePersonInfoGrp);
 };
 
 #endif // CONTROLLER_H

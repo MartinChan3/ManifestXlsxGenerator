@@ -1,9 +1,10 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include "mainwindow.h"
-#include "vld.h"
+//#include "vld.h"
 
 int main(int argc, char *argv[])
 {
+    qRegisterMetaType<SinglePersonInfoGrp>();
     QApplication a(argc, argv);
 
     MainWindow mWindow;

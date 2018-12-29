@@ -1,9 +1,10 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include "controller.h"
 #include <QThread>
+#include <QTextBrowser>
 
 namespace Ui {
 class MainWindow;
@@ -22,11 +23,13 @@ private:
     Controller *controllerp;
 
     QThread *threadControlp;
+    QTextBrowser *mTextBroswerp;
 
 public slots:
     void startProgress(QString filePath, QDate date = QDate::currentDate());
     void Slot_Receive_Info(int, QString);
 
+    void SlotShowdatainui(SinglePersonInfoGrp);
 signals:
     void Sig_Call_Output(QString, QDate);
 

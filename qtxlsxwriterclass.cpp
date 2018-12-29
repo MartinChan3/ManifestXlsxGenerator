@@ -31,14 +31,27 @@ bool QtXlsxWriterClass::startWriteNewExcel(const SupplyAllPack &pack)
     }
 
     //获取并分类全部信息
+    QDateTime currentDateTime = QDateTime::currentDateTime();//时间只可以初始化一次
     SinglePersonInfoGrp mSinglePersonInfoGrp = pack.toSinglePersonInfoGrp();
+    emit Sig_CallUiShow(mSinglePersonInfoGrp);
+
     for (int i = 0; i < mSinglePersonInfoGrp.size(); i++)
     {
         //对每个人来说，每个人的条目按照8行一页的标准进行读取
         int singleManThingsNum = mSinglePersonInfoGrp.at(i).infoPtrs.size();
-        int size = (int)(singleManThingsNum / SINGLE_PAPER_LINE);
-        if (singleManThingsNum > size * SINGLE_PAPER_LINE)
-            size++; //若不足规定条数则视为进1
+        int size = (int)( singleManThingsNum / SINGLE_PAPER_LINE);
+//        if ( singleManThingsNum > size * SINGLE_PAPER_LINE )
+//            size++; //若不足规定条数则视为进1
+        if (singleManThingsNum % SINGLE_PAPER_LINE)
+        {
+            size += 1;
+        }
+
+        if (size == 0)
+        {
+            qDebug() << "Wrong of size and return";
+            return false;
+        }
 
         for (int j = 0; j < size; j++)
         {
@@ -51,7 +64,7 @@ bool QtXlsxWriterClass::startWriteNewExcel(const SupplyAllPack &pack)
 
             ///保存,这里需要修改为正确的名称
             QString folderPath;
-            if (!generateDesktopDir(QDateTime::currentDateTime(), folderPath))
+            if (!generateDesktopDir( currentDateTime, folderPath))
             {
                 emit Sig_Status_Info(SIGNAL_WRONG_FOLDER_GENERATOR, "Wrong generator");
                 return false;
@@ -69,6 +82,8 @@ bool QtXlsxWriterClass::startWriteNewExcel(const SupplyAllPack &pack)
             }
         }
     }
+
+    return true;
 }
 
 //写入单个文件条目类所有文件
@@ -79,6 +94,8 @@ bool QtXlsxWriterClass::writeSingleDocumentThing(QXlsx::Document &sDoc,
     int writeSize = (spI.infoPtrs.size() - startIndex) >= SINGLE_PAPER_LINE ?
                     SINGLE_PAPER_LINE :
                     (spI.infoPtrs.size() - startIndex);
+    qDebug() << QString("info type num %1 and startIndex is %2").arg(spI.infoPtrs.size()).arg(startIndex);
+    qDebug() << "WriteSize" << writeSize;
 
     const SupplyConstInfoPtrs *tInfosPtr = &(spI.infoPtrs);
     for (int i = 0; i < writeSize; i++)
@@ -88,6 +105,16 @@ bool QtXlsxWriterClass::writeSingleDocumentThing(QXlsx::Document &sDoc,
         sDoc.write(startRowOfThingData + i, startColOfThingData + 1, lineInfoPtr->nameOfUnit);
         sDoc.write(startRowOfThingData + i, startColOfThingData + 2, lineInfoPtr->number);
         sDoc.write(startRowOfThingData + i, startColOfThingData + 3, lineInfoPtr->unitPrice);
+    }
+
+    qDebug() << "WriteSize" << writeSize;
+    //剩余的编写为空行
+    for (int i = writeSize; i < SINGLE_PAPER_LINE; i++)
+    {
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 0, QVariant());
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 1, QVariant());
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 2, QVariant());
+        sDoc.write(startRowOfThingData + i, startColOfThingData + 3, QVariant());
     }
 
     return true;

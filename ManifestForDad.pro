@@ -33,11 +33,11 @@ DISTFILES += \
     README.md
 
 #Config vld for debugging
-win32 {
-    CONFIG(debug, debug|release) {
-        DEFINES += VLD_MODULE
-        VLD_PATH = "C:\Program Files (x86)\Visual Leak Detector"
-        INCLUDEPATH += $${VLD_PATH}/include
-        LIBS += -L$${VLD_PATH}/lib/Win32 -lvld
-    }
-}
+#win32 {
+#    CONFIG(debug, debug|release) {
+#        DEFINES += VLD_MODULE
+#        VLD_PATH = "C:\Program Files (x86)\Visual Leak Detector"
+#        INCLUDEPATH += $${VLD_PATH}/include
+#        LIBS += -L$${VLD_PATH}/lib/Win32 -lvld
+#    }
+#}

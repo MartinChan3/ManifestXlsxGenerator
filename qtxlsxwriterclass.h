@@ -45,6 +45,8 @@ typedef struct _SINGLEPERSONINFO{
     SupplyConstInfoPtrs infoPtrs;
 }SinglePersonInfo;
 typedef QVector<SinglePersonInfo> SinglePersonInfoGrp;
+Q_DECLARE_METATYPE(SinglePersonInfoGrp)
+
 
 //总信息包
 typedef struct _SUPPLYALLPACK{
@@ -84,6 +86,7 @@ public slots:
 
 signals:
     bool Sig_Status_Info(int, QString);
+    bool Sig_CallUiShow(SinglePersonInfoGrp);
 };
 
 #endif // QTXLSXWRITERCLASS_H

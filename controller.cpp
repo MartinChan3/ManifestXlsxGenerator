@@ -1,9 +1,12 @@
-#include "controller.h"
+﻿#include "controller.h"
 
 Controller::Controller()
 {
     connect(&xlsxWriter, SIGNAL(Sig_Status_Info(int,QString)),
-            this, SIGNAL(Sig_Controller_Status(int,QString))); 
+            this, SIGNAL(Sig_Controller_Status(int,QString)));
+
+    connect(&xlsxWriter, SIGNAL(Sig_CallUiShow(SinglePersonInfoGrp)),
+            this, SIGNAL(Sig_CallUiShow2(SinglePersonInfoGrp)));
 }
 
 Controller::~Controller()
