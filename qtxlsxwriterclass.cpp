@@ -60,7 +60,7 @@ bool QtXlsxWriterClass::startWriteNewExcel(const SupplyAllPack &pack)
             writeSingleDocumentDateTime(tSDoc, pack.dateTime);
             writeSingleDocumentThing(tSDoc,
                                      mSinglePersonInfoGrp.at(i),
-                                     i * SINGLE_PAPER_LINE + j);
+                                     j * SINGLE_PAPER_LINE);
 
             ///保存,这里需要修改为正确的名称
             QString folderPath;
@@ -111,10 +111,10 @@ bool QtXlsxWriterClass::writeSingleDocumentThing(QXlsx::Document &sDoc,
     //剩余的编写为空行
     for (int i = writeSize; i < SINGLE_PAPER_LINE; i++)
     {
-        sDoc.write(startRowOfThingData + i, startColOfThingData + 0, QVariant());
-        sDoc.write(startRowOfThingData + i, startColOfThingData + 1, QVariant());
-        sDoc.write(startRowOfThingData + i, startColOfThingData + 2, QVariant());
-        sDoc.write(startRowOfThingData + i, startColOfThingData + 3, QVariant());
+        for (int j = 0; j < 12; j++ )
+        {
+            sDoc.write(startRowOfThingData + i, startColOfThingData + j, QVariant());
+        }
     }
 
     return true;
